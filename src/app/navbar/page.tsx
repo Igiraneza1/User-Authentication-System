@@ -20,16 +20,16 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md  flex justify-between items-center">
+    <nav className="bg-gray-600 py-3 shadow-md  flex justify-center items-center">
       <button
         onClick={handleHomeClick}
-        className="text-indigo-600 font-semibold hover:text-indigo-800 focus:outline-none"
+        className="text-gray-300 font-bold hover:text-indigo-800 focus:outline-none"
       >
         Home
       </button>
       <button
         onClick={handleDashboardClick}
-        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
+        className=" text-gray-300 font-bold px-4 py-2 rounded-md hover:text-indigo-800 transition"
       >
         Dashboard
       </button>
