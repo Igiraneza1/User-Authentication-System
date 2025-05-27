@@ -2,9 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser, SignedIn} from "@clerk/nextjs";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { useUser, SignedIn } from "@clerk/nextjs";
 
 export default function DashboardPage() {
   const { user, isSignedIn } = useUser();
@@ -12,41 +10,19 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!isSignedIn) {
-      router.push("/sign-in"); // Redirect if not signed in
+      router.push("/sign-in");
     }
   }, [isSignedIn, router]);
 
-  useEffect(() => {
-    const saveUser = async () => {
-      if (user) {
-        const userRef = doc(db, "users", user.id);
-        await setDoc(
-          userRef,
-          {
-            name: user.fullName,
-            email: user.primaryEmailAddress?.emailAddress,
-          },
-          { merge: true }
-        );
-      }
-    };
-    saveUser();
-  }, [user]);
-
   return (
     <SignedIn>
-      <div className="min-h-screen bg-gray-100 p-6">
-        <div className="flex justify-center items-center mb-6">
-          <h1 className="text-2xl font-bold">Welcome, {user?.firstName}</h1>
-        </div>
-        <div className="flex justify-center items-center gap-6">
+      <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+        <h1 className="text-3xl font-bold mb-8">Welcome, {user?.firstName}!</h1>
 
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-4">User Profile</h2>
-            <p className="text-gray-700">Name: {user?.fullName}</p>
-            <p className="text-gray-700">Email: {user?.primaryEmailAddress?.emailAddress}</p>
-          </div>
-
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+          <h2 className="text-xl font-semibold mb-4">User Profile</h2>
+          <p className="text-gray-700 mb-2"><span className="font-medium">Name:</span> {user?.fullName}</p>
+          <p className="text-gray-700"><span className="font-medium">Email:</span> {user?.primaryEmailAddress?.emailAddress}</p>
         </div>
       </div>
     </SignedIn>
